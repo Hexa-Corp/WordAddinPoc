@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+           xsi:type="TaskPaneApp">
+
+  <Id>8a8affb4-2518-472f-9cff-064c29c6e6ff</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Contoso</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Word SharePoint Tool"/>
+  <Description DefaultValue="Fetch data from SharePoint Lists directly in Word."/>
+  
+  <!-- App icons -->
+  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
+  
+  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+
+  <!-- App domain for SharePoint -->
+  <AppDomains>
+    <AppDomain>https://contoso.sharepoint.com</AppDomain>
+    <AppDomain>https://graph.microsoft.com</AppDomain>
+    <AppDomain>https://login.microsoftonline.com</AppDomain>
+  </AppDomains>
+
+  <!-- Host Application -->
+  <Hosts>
+    <Host Name="Document"/>
+  </Hosts>
+
+  <!-- Default Taskpane -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
+  </DefaultSettings>
+
+  <!-- Permissions -->
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <!-- Version Overrides for Ribbon + Graph/SharePoint API -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+                    xsi:type="VersionOverridesV1_0">
+
+    
+
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <FunctionFile resid="Commands.Url"/>
+
+          <!-- Ribbon Button -->
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="CommandsGroup">
+                <Label resid="CommandsGroup.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16"/>
+                  <bt:Image size="32" resid="Icon.32x32"/>
+                  <bt:Image size="80" resid="Icon.80x80"/>
+                </Icon>
+                <Control xsi:type="Button" id="FetchSharePointDataButton">
+                  <Label resid="FetchButton.Label"/>
+                  <Supertip>
+                    <Title resid="FetchButton.Label"/>
+                    <Description resid="FetchButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>TaskpaneButtonId</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <!-- Resources -->
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with your Word + SharePoint Tool!"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="SharePoint Tools"/>
+        <bt:String id="FetchButton.Label" DefaultValue="Fetch SharePoint Data"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="This add-in connects to SharePoint lists and fetches data into Word."/>
+        <bt:String id="FetchButton.Tooltip" DefaultValue="Click to fetch SharePoint list data"/>
+      </bt:LongStrings>
+    </Resources>
+<WebApplicationInfo>
+  <Id>421d5157-7a0d-42a8-9774-518351a40b82</Id> <!-- Your Azure AD App (Client ID) -->
+  <Resource>api://localhost:3000/421d5157-7a0d-42a8-9774-518351a40b82</Resource>
+  <Scopes>
+    <Scope>profile</Scope>
+    <Scope>openid</Scope>
+    <Scope>User.Read</Scope>
+    <Scope>Sites.Read.All</Scope>
+    <Scope>Files.ReadWrite.All</Scope>
+    <Scope>https://graph.microsoft.com</Scope>
+  </Scopes>
+</WebApplicationInfo>
+
+  </VersionOverrides>
+</OfficeApp>
